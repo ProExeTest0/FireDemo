@@ -1,11 +1,16 @@
 import * as React from 'react';
 import Login from '../auth/Login';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Feed, ReelsInsearch} from '../screen/Index';
+import {firebase} from '@react-native-firebase/auth';
+
 import Tabnav from './Tabnav';
 import Signup from '../auth/Sign';
 import Home from '../screen/Home';
+
 const Stack = createNativeStackNavigator();
+if (!firebase.apps.length) {
+  firebase.initializeApp(FIREBASE_CONFIG);
+}
 const Navigation = () => {
   return (
     <Stack.Navigator>

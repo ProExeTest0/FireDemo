@@ -9,5 +9,7 @@ const icon = {
   add: require('../assets/Icons/add.png'),
   messenger: require('../assets/Icons/messenger.png'),
   loginlogo: require('../assets/Icons/loginlogo.png'),
+  loginlogo: require('../assets/Icons/loginlogo.png'),
+  profile: require('../assets/Icons/profile.jpeg'),
 };
 export default icon;

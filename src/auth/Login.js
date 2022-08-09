@@ -1,23 +1,42 @@
-//import liraries
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import icon from '../helper/Iconconstats';
-import {Button} from 'react-native';
 import Textinputevent from '../components/TextInput';
 import Btn from '../components/Btn';
 import {Or} from '../helper/String';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+
 const Login = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   const {navigate} = useNavigation();
   const Success_loin = () => {
-    navigate('feed');
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(response => {
+        navigate('feed');
+        console.log('login sucess', response);
+      })
+      .catch(error => {
+        alert('please enter valid email or password');
+        console.log('enter valid', error);
+      });
   };
+
   return (
     <View style={styles.container}>
       <Image style={styles.tabimage} source={icon.loginlogo} />
       <View style={{bottom: 70}}>
-        <Textinputevent place={'email'} />
-        <Textinputevent place={'passwod'} />
+        <Textinputevent
+          place={'email'}
+          onChangeText={text => setEmail(text.toLowerCase())}
+        />
+        <Textinputevent
+          place={'passwod'}
+          onChangeText={text => setPassword(text)}
+        />
         <Btn text={'LOGIN'} onPress={Success_loin} />
         <View>
           <View
@@ -40,7 +59,6 @@ const Login = () => {
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

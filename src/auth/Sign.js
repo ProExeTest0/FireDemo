@@ -5,11 +5,14 @@ import Btn from '../components/Btn';
 import Textinputevent from '../components/TextInput';
 import {SignUPText} from '../helper/String';
 import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {USERDATA} from '../action/Useraction';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import {emailValidator} from '../helper/emailvalidator';
+import {passwordValidator} from '../helper/passwordvalidate';
+
 const Signup = () => {
-  const {userdata} = useSelector(state => state.pageList);
   const dispatch = useDispatch();
   const {navigate} = useNavigation();
   const [name, setUsername] = useState('');
@@ -29,7 +32,23 @@ const Signup = () => {
   const Onsubmit = () => {
     setId(id + 1);
     dispatch(USERDATA(list));
-    navigate('feed');
+
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(response => {
+        navigate('feed');
+        console.log('User account created & signed in!', response);
+      })
+      .catch(error => {
+        if (passwordValidator(password)) {
+          alert('password');
+        } else if ((email, name, phone, password == 0)) {
+          alert('please enter data');
+          console.log('please enter data', error);
+        } else if (emailValidator(email)) {
+          alert('valid email');
+        } else alert('That email address is already in use!');
+      });
   };
 
   return (

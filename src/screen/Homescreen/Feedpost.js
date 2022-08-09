@@ -1,29 +1,19 @@
-//import liraries
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect} from 'react';
 import Header from '../../components/Header';
-import {useSelector} from 'react-redux';
-import {FlatList} from 'react-native-gesture-handler';
 
 const Feedpost = () => {
-  const {userdata} = useSelector(state => state.pageList);
-  console.log('userdata454544454', userdata);
-
-  const _renderitem = ({item}) => {
-    console.log('items', item);
-    <View style={{backgroundColor: 'red'}}>
-      <Text>{item?.name}</Text>
-    </View>;
-  };
+  // const users = await firestore().collection('Users').get();
+  // const user = await firestore().collection('Users').doc('ABC').get();
 
   return (
     <View>
       <Header />
       <View style={styles.container}>
         <Text>Helloooo</Text>
-        <FlatList data={userdata} renderItem={_renderitem} />
       </View>
     </View>
   );
