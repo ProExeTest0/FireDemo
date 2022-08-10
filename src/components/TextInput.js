@@ -16,6 +16,8 @@ const Textinputevent = ({
     <View style={styles.container}>
       <TextInput
         placeholder={place}
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={onChangeText}
         value={value}
         style={{

@@ -8,6 +8,7 @@ import {
   ReelsOnBottom,
 } from '../screen/Index';
 import Tabstyle from './Bottom_style';
+import Drawernav from './Drawernav';
 
 const Tab = createBottomTabNavigator();
 

@@ -1,19 +1,16 @@
 import * as React from 'react';
 import Login from '../auth/Login';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {firebase} from '@react-native-firebase/auth';
 
-import Tabnav from './Tabnav';
 import Signup from '../auth/Sign';
-import Home from '../screen/Home';
+
+import Drawernav from './Drawernav';
 
 const Stack = createNativeStackNavigator();
-if (!firebase.apps.length) {
-  firebase.initializeApp(FIREBASE_CONFIG);
-}
+
 const Navigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
         component={Login}
@@ -21,8 +18,8 @@ const Navigation = () => {
         // gestureEnabled:false
       />
       <Stack.Screen
-        name="feed"
-        component={Tabnav}
+        name="drawer"
+        component={Drawernav}
         options={{headerShown: false}}
       />
       <Stack.Screen

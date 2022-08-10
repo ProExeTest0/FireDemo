@@ -4,14 +4,13 @@ import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect} from 'react';
 import Header from '../../components/Header';
+import ImageFeed from '../../components/Imagefeed';
 
 const Feedpost = () => {
-  // const users = await firestore().collection('Users').get();
-  // const user = await firestore().collection('Users').doc('ABC').get();
-
   return (
     <View>
       <Header />
+      <ImageFeed />
       <View style={styles.container}>
         <Text>Helloooo</Text>
       </View>

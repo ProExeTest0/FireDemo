@@ -11,5 +11,9 @@ const icon = {
   loginlogo: require('../assets/Icons/loginlogo.png'),
   loginlogo: require('../assets/Icons/loginlogo.png'),
   profile: require('../assets/Icons/profile.jpeg'),
+  _demoimage1: require('../assets/Icons/1_Demoimage.jpg'),
+  _demoimage2: require('../assets/Icons/2_Demoimage.jpg'),
+  _demoimage3: require('../assets/Icons/3_Demoimage.jpg'),
+  _demoimage4: require('../assets/Icons/4_Demoimage.jpg'),
 };
 export default icon;

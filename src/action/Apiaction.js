@@ -1,6 +1,3 @@
-import {Connect, useDispatch, useSelector} from 'react-redux';
-import {useEffect} from 'react';
-import {ApiData} from '../src/action/Listaction';
 import {makeApiRequest} from '../../global/Globalapi';
 import {GET_API_DATA} from '../src/action/Type';
 

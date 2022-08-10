@@ -6,17 +6,25 @@ import Btn from '../components/Btn';
 import {Or} from '../helper/String';
 import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const {navigate} = useNavigation();
   const Success_loin = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        navigate('feed');
+      .then(async response => {
+        const uid = auth().currentUser.uid;
+        console.log('login::', uid);
+        navigate('drawer');
+        await AsyncStorage.setItem('UID', uid);
+
+        console.log('idddd ', id);
+
+        // navigate('drawer');
         console.log('login sucess', response);
       })
       .catch(error => {
@@ -24,6 +32,24 @@ const Login = () => {
         console.log('enter valid', error);
       });
   };
+
+  const getValueStore = async () => {
+    const value = await AsyncStorage.getItem('UID');
+
+    value && navigate('drawer');
+  };
+  const getValue = () => {
+    const currentUserId = auth().currentUser;
+    //console.log('current User Id ', currentUserId);
+    if (currentUserId !== null) {
+      navigate('drawer');
+    }
+  };
+
+  useEffect(() => {
+    getValue();
+    // getValueStore();
+  }, []);
 
   return (
     <View style={styles.container}>

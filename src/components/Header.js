@@ -1,6 +1,6 @@
 //import liraries
-import React, {Component} from 'react';
-import {View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, SafeAreaView, Image} from 'react-native';
 import icon from '../helper/Iconconstats';
 // create a component
 const Header = () => {

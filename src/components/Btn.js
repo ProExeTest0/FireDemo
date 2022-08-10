@@ -3,12 +3,6 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {Listaction} from '../action/Listaction';
-import {useSelector} from 'react-redux';
-import {USERDATA} from '../action/Useraction';
-// create a component
 
 const Btn = ({text, onPress}) => {
   return (
@@ -43,5 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default Btn;

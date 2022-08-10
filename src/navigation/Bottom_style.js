@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import icon from '../helper/Iconconstats';
 
-// create a component
-const Tabstyle = ({state, descriptors, navigation}) => {
+const Tabstyle = ({navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('Feed')}>
