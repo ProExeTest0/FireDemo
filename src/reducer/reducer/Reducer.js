@@ -1,11 +1,10 @@
-import {GET_API_DATA, GET_PAGE_LIST, USER} from '../../action/Type';
-import {useEffect} from 'react';
+import {GET_API_DATA, GET_PAGE_LIST, USER, SIGNUP} from '../../action/Type';
 const INITIAL_STATE = {
   data: [0],
   arr: [],
   userdata: [],
+  signup: [],
 };
-
 const pageListReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_PAGE_LIST:
@@ -23,21 +22,29 @@ const pageListReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userdata: [...state.userdata, action.payload],
       };
+    case SIGNUP:
+      return {
+        ...state,
+        signup: [...state.signup, action.payload],
+      };
 
     default:
       return state;
   }
 };
+
+// const Firebaseactions = () => {
+//   const {signup} = useSelector(state => state?.pageList);
+//   console.log('fname----------', signup);
+//   auth()
+//     .createUserWithEmailAndPassword('tuv@gmail.com', '123456')
+//     .then(response => {
+//       //  navigate('feed'); // navigation for next page.
+//       console.log('User account created & signed in!', response);
+//     })
+//     .catch(error => {
+//       console.log('That email address is already in use!', error);
+//     });
+// };
+
 export default pageListReducer;
-
-// let itemExists = false;
-// const newState = state.map(item => {
-//   const newItem = {...item};
-//   if (newItem.item.uid === payload.item.uid) {
-//     itemExists = true;
-//     newItem.item.qty = item.qty + 1;
-//   }
-//   return newItem;
-// });
-
-// if (!itemExists) newState.push(payload);
