@@ -1,5 +1,4 @@
 import {USER} from './Type';
-
 export const USERDATA = data => {
   console.log('data::', data);
   return dispatch => {

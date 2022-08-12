@@ -3,15 +3,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
 // create a component
-const Textinputevent = ({
-  place,
-  username,
-  useremail,
-  userphone,
-  userpassword,
-  onChangeText,
-  value,
-}) => {
+const Textinputevent = ({place, onChangeText, value, onFocus}) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -19,6 +11,7 @@ const Textinputevent = ({
         autoCapitalize="none"
         autoCorrect={false}
         onChangeText={onChangeText}
+        onFocus={onFocus}
         value={value}
         style={{
           height: 48,
