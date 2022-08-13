@@ -42,6 +42,10 @@ const RenderItem = ({item}) => {
     <View style={styles.container}>
       <Text>{item.title}</Text>
       <Image style={styles.tabimage} source={item.image} />
+      {/* <Image
+        style={styles.stretch}
+        source={{uri: 'gs://mezuniyet2r.appspot.com/images/erkek.jpg'}}
+      /> */}
       <Image style={styles.likebtn} source={icon.heart} />
       <Text>{item.dis}</Text>
     </View>
