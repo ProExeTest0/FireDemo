@@ -1,13 +1,18 @@
 //import liraries
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
-import icon from '../helper/Iconconstats';
-
+import {useSelector} from 'react-redux';
 const ProfileImagesetter = () => {
+  const {imageuplaod} = useSelector(state => state?.pageList);
   return (
     <View style={styles.container}>
       <View style={styles.imagecontainer}>
-        <Image style={styles.tabimage} source={icon.profile} />
+        <Image
+          style={styles.tabimage}
+          source={{
+            uri: imageuplaod,
+          }}
+        />
       </View>
     </View>
   );
@@ -17,7 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    bottom: 250,
+    bottom: 220,
   },
   imagecontainer: {
     height: 100,

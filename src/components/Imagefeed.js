@@ -5,6 +5,10 @@ import {FlatList} from 'react-native-gesture-handler';
 import icon from '../helper/Iconconstats';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
+import {useState} from 'react';
+import {useEffect} from 'react';
+import firestore from '@react-native-firebase/firestore';
+// import storage from '@react-native-firebase/storage';
 
 const DATA = [
   {
@@ -45,6 +49,12 @@ const RenderItem = ({item}) => {
 };
 
 const ImageFeed = () => {
+  const getimage = () => {};
+
+  useEffect(() => {
+    getimage();
+  }, []);
+
   const dispatch = useDispatch();
   const {userdata} = useSelector(state => state.pageList);
   console.log('arr123456', userdata);
@@ -59,7 +69,6 @@ const ImageFeed = () => {
 const styles = StyleSheet.create({
   container: {
     height: 250,
-
     margin: 10,
   },
   tabimage: {

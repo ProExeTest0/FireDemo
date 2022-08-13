@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Signup from '../auth/Sign';
 
 import Drawernav from './Drawernav';
+import Upload_details from '../auth/Uplaoddata';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ const Navigation = () => {
       <Stack.Screen
         name="signup"
         component={Signup}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="upload_data"
+        component={Upload_details}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
