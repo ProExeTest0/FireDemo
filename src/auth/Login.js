@@ -17,10 +17,9 @@ const Login = () => {
       .signInWithEmailAndPassword(email, password)
       .then(async response => {
         const uid = auth().currentUser.uid;
-        navigate('drawer');
         await AsyncStorage.setItem('UID', uid);
-        console.log('idddd ', id);
-        console.log('login sucess', response);
+        console.log('uid', uid);
+        navigate('drawer');
       })
       .catch(error => {
         alert('please enter valid email or password');

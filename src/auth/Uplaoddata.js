@@ -7,9 +7,11 @@ import {UPDATE_PROFILE} from '../helper/String';
 import {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {useSelector} from 'react-redux';
 const Upload_details = () => {
   const [updatename, setUpdatename] = useState();
   const [updatelastname, setupdateLastname] = useState();
+  // const {signup, imageuplaod} = useSelector(state => state?.pageList);
   const Updatedetail = () => {
     firestore()
       .collection('Userdetail')

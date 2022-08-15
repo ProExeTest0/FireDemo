@@ -1,17 +1,72 @@
-//import liraries
 import React from 'react';
-import {View, StyleSheet, SafeAreaView, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  alert,
+} from 'react-native';
 import icon from '../helper/Iconconstats';
-// create a component
+import ImagePicker from 'react-native-image-crop-picker';
+import {useState} from 'react';
+
+import storage from '@react-native-firebase/storage';
+
 const Header = () => {
+  const [image, setImage] = useState('');
+
+  const handleChoosePhoto = () => {
+    ImagePicker.openPicker({
+      width: 400,
+      height: 480,
+      cropping: true,
+    })
+      .then(image => {
+        const imageUri = image.sourceURL;
+        setImage(imageUri);
+        uploadImage();
+      })
+      .catch(e => console.log('eroeeeeeeeeeeee', e));
+  };
+  const uploadImage = async () => {
+    const uploadUri = image;
+    let fileName = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    const extension = fileName.split('.').pop();
+    const name = fileName.split('.').slice(0, -1).join('.');
+    fileName = name + Date.now() + '.' + extension;
+    console.log('filename', fileName);
+    const storageRef = storage().ref(`photos/${fileName}`);
+    console.log('storageRef', storageRef);
+    const task = storageRef.putFile(uploadUri);
+    console.log('task', task);
+    task.on('state_changed', taskSnapshot => {});
+    try {
+      await task;
+      const url = await storageRef.getDownloadURL();
+      console.log('url ', url);
+      return url;
+    } catch (e) {
+      alert('Image is not Successfully Uploaded');
+      console.log(e);
+      return null;
+    }
+  };
   return (
     <SafeAreaView style={styles.safearea}>
       <View style={styles.container}>
         <Image style={styles.logostyle} source={icon.Logo} />
         <View style={{flexDirection: 'row'}}>
-          <Image style={styles.tabimage} source={icon.add} />
-          <Image style={styles.tabimage} source={icon.messenger} />
+          <TouchableOpacity onPress={handleChoosePhoto}>
+            <Image style={styles.tabimage} source={icon.add} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image style={styles.tabimage} source={icon.messenger} />
+          </TouchableOpacity>
         </View>
+        {/* <TouchableOpacity onPress={uploadImage}>
+          <Text>upload image</Text>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );

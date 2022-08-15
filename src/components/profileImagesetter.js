@@ -7,12 +7,12 @@ const ProfileImagesetter = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imagecontainer}>
-        <Image
+        {/* <Image
           style={styles.tabimage}
           source={{
             uri: imageuplaod,
           }}
-        />
+        /> */}
       </View>
     </View>
   );

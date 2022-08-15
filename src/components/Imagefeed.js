@@ -1,6 +1,6 @@
 //import liraries
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import icon from '../helper/Iconconstats';
 import {useSelector} from 'react-redux';
@@ -8,68 +8,92 @@ import {useDispatch} from 'react-redux';
 import {useState} from 'react';
 import {useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
-// import storage from '@react-native-firebase/storage';
 
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    id: 1,
     title: 'First Item',
+    islike: false,
     image: icon._demoimage1,
     dis: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    id: 2,
     title: 'Second Item',
+    islike: false,
     image: icon._demoimage2,
     dis: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: 3,
     title: 'Third Item',
+    islike: false,
     image: icon._demoimage3,
     dis: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: 4,
     title: 'Third Item',
+    islike: false,
     image: icon._demoimage4,
     dis: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
   },
 ];
 
-const RenderItem = ({item}) => {
-  return (
-    <View style={styles.container}>
-      <Text>{item.title}</Text>
-      <Image style={styles.tabimage} source={item.image} />
-      {/* <Image
-        style={styles.stretch}
-        source={{uri: 'gs://mezuniyet2r.appspot.com/images/erkek.jpg'}}
-      /> */}
-      <Image style={styles.likebtn} source={icon.heart} />
-      <Text>{item.dis}</Text>
-    </View>
-  );
-};
-
 const ImageFeed = () => {
-  const getimage = () => {};
+  const [data, setData] = useState(DATA);
 
+  const onLikeButtonPress = item => {
+    const result = data?.map(i => {
+      if (i.id === item?.id) {
+        return {...i, islike: !i?.islike};
+      } else {
+        return i;
+      }
+    });
+    console.log('Result : ', result);
+    setData(result);
+  };
+
+  const RenderItem = ({item}) => {
+    return (
+      <View style={styles.container}>
+        <Text>{item.title}</Text>
+        <Image style={styles.tabimage} source={item.image} />
+        <TouchableOpacity onPress={() => onLikeButtonPress(item)}>
+          <Image
+            style={styles.likebtn}
+            source={item.islike ? icon.red_heart : icon.heart}
+            // source={!item.islike == 'true' ? icon.heart : icon.red_heart}
+          />
+        </TouchableOpacity>
+        <Text>{item.dis}</Text>
+      </View>
+    );
+  };
+
+  const renderFooter = () => <View style={{padding: 70}} />;
+
+  const getimage = () => {};
   useEffect(() => {
     getimage();
   }, []);
 
   const dispatch = useDispatch();
   const {userdata} = useSelector(state => state.pageList);
-  console.log('arr123456', userdata);
+
   return (
     <View>
-      <FlatList data={DATA} renderItem={RenderItem} />
+      <FlatList
+        data={data}
+        keyExtractor={item => item.id}
+        renderItem={RenderItem}
+        ListFooterComponent={renderFooter}
+      />
     </View>
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     height: 250,
@@ -80,8 +104,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   likebtn: {
-    height: 20,
-    width: 20,
+    height: 24,
+    width: 27,
   },
 });
 

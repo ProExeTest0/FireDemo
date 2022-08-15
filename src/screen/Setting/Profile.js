@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import ProfileImagesetter from '../../components/profileImagesetter';
 import {useNavigation} from '@react-navigation/native';
@@ -11,11 +11,13 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {SIGNUP} from '../../action/Type';
 import {useDispatch} from 'react-redux';
 import {Image_Uplaod} from '../../action/ImageUpload';
-import Upload_details from '../../auth/Uplaoddata';
-
+import storage from '@react-native-firebase/storage';
 const ProfileView = () => {
-  const {signup, imageuplaod} = useSelector(state => state?.pageList);
-  const dispatch = useDispatch();
+  const [image, setImage] = useState('');
+
+  // const {signup, imageuplaod} = useSelector(state => state?.pageList);
+
+  // const dispatch = useDispatch();
   const getUserData = () => {
     firestore()
       .collection('Userdetail')
@@ -26,7 +28,7 @@ const ProfileView = () => {
           console.log('User data: ', documentSnapshot.data());
         }
         let respo = documentSnapshot.data();
-        dispatch({type: SIGNUP, payload: respo});
+        // dispatch({type: SIGNUP, payload: respo});
       })
       .catch(err => {
         console.log(err);
@@ -50,24 +52,48 @@ const ProfileView = () => {
   };
 
   const {navigate} = useNavigation();
-  const onAddImage = async () => {
+  const handleChoosePhoto = () => {
     ImagePicker.openPicker({
-      width: 100,
-      height: 200,
+      width: 400,
+      height: 480,
       cropping: true,
-      compressImageQuality: 0,
-    }).then(image => {
-      dispatch(Image_Uplaod(image.sourceURL));
-    });
+    })
+      .then(image => {
+        const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+        setImage(imageUri);
+        uploadImage();
+      })
+      .catch(e => console.log(e));
+  };
+  const uploadImage = async () => {
+    const uploadUri = image;
+    let fileName = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+    const extension = fileName.split('.').pop();
+    const name = fileName.split('.').slice(0, -1).join('.');
+    fileName = name + Date.now() + '.' + extension;
+    const storageRef = storage().ref(`photos/${fileName}`);
+    const task = storageRef.putFile(uploadUri);
+    task.on('state_changed', taskSnapshot => {});
+    try {
+      await task;
+      const url = await storageRef.getDownloadURL();
+      console.log('url ', url);
+      return url;
+    } catch (e) {
+      alert('Image is not Successfully Uploaded');
+      console.log(e);
+      return null;
+    }
   };
 
   return (
     <View style={styles.container}>
       <ProfileImagesetter />
       <Text>{auth().currentUser.email}</Text>
+
       <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
-          onPress={onAddImage}
+          onPress={handleChoosePhoto}
           style={{backgroundColor: 'black', padding: 15}}>
           <Text style={{color: 'white'}}>upload Image </Text>
         </TouchableOpacity>
